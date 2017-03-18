@@ -30,6 +30,7 @@ db.once('open', () => {
 let index = require('./routes/index'); // top level routes
 let games = require('./routes/games'); // routes for games
 let users = require('./routes/users'); // routes for users and auth
+let api = require('./routes/api'); // routes for the JSON api
 
 let app = express();
 
@@ -44,7 +45,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
-app.use(express.static(path.join(__dirname, '../node_modules')));
+app.use(express.static(path.join(__dirname, '../node_modules')));
 
 
 // setup session
@@ -63,6 +64,7 @@ app.use(passport.session());
 app.use('/', index); // top level links
 app.use('/games', games); // games links - start with /games
 app.use('/users', users); // users links - start with /users
+app.use('/api', api); // returns JSON
 
 // Passport User Configuration
 let UserModel = require('./models/users');
